@@ -1,8 +1,8 @@
 package ixn.snakegame.objects;
 
 public class Snake {
-    public int direction = 3; // 0 - right, 1 - up, 2 - left, 3 - down
-    public int length = 2;
+    public Direction direction = Direction.RIGHT;
+    public int length = 10;
 
     public int[] snakeX = new int[100];
     public int[] snakeY = new int[100];
@@ -20,9 +20,19 @@ public class Snake {
             snakeY[i] = snakeY[i - 1];
         }
 
-        if (direction == 0) snakeX[0]++;
-        if (direction == 1) snakeY[0]++;
-        if (direction == 2) snakeX[0]--;
-        if (direction == 3) snakeY[0]--;
+        if (direction == Direction.RIGHT) snakeX[0]++;
+        if (direction == Direction.DOWN) snakeY[0]++;
+        if (direction == Direction.LEFT) snakeX[0]--;
+        if (direction == Direction.UP) snakeY[0]--;
+
+        // cut snake if it eats itself
+        for (int i = this.length - 1; i > 0 ; i--) {
+            if (snakeX[0] == snakeX[i] && snakeY[0] == snakeY[i]) {
+                length = i - 2;
+            }
+        }
+
+        if (this.length < 2) length = 2;
+        // /cut snake if it eats itself
     }
 }
